@@ -1,0 +1,51 @@
+int main()
+{
+    fraction a; //a = 0/1
+    fraction b(5); //b=5/1
+    fraction c(6,8); //c=6/8
+
+    cout << "a=" << a << ", b=" << b << ", c=" << c << endl; //should display a=0, b=5, c=6/8
+
+    cout << "The numerator of c is " << c.num()
+         << " and the denominator is " << c.denom() << endl; //should show 6 then 8
+
+    cout << "As a decimal, c=" << c.convert() << endl; //should show 0.75
+
+    c.reduce();
+
+    cout << "When you reduce c, you get " << c << endl; //should show 3/4
+
+    fraction d;
+    cout << "Enter a fraction: ";
+    cin >> d; //tests >>
+
+    cout << "d=" << d << endl; //should display the fraction you just entered
+
+    cout << "+d=" << +d << ", -d=" << -d << endl; //test unary +/-
+
+    cout << "c+d=" << c+d << endl; //check if this is true (should be reduced)
+    cout << "c-d=" << c-d << endl; //check if this is true (should be reduced)
+    cout << "c*d=" << c*d << endl; //check if this is true (should be reduced)
+    cout << "c/d=" << c/d << endl; //check if this is true (should be reduced)
+
+    c+=d;
+    cout << "c=" << c << endl;
+    c-=d;
+    cout << "c=" << c << endl;
+    c*=d;
+    cout << "c=" << c << endl;
+    c/=d;
+    cout << "c=" << c << endl;
+
+    fraction e(1,1);
+    if(c!=e) cout << "c!=e\n";
+    c/=c; //c=1/1
+    if(c==e) cout << "c==e\n";
+    if(b>e) cout << "b>e\n";
+    if(c>=e) cout << "c>=e\n";
+    if(c<=e) cout << "c<=e\n";
+    if(e<b) cout << "e<b\n";
+
+    system("PAUSE");
+    return 0;
+}

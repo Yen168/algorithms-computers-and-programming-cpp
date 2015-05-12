@@ -1,0 +1,278 @@
+//A class for n-dimensional vectors
+
+#include<iostream>
+#include<cstdlib>
+#include<cmath>
+using namespace std;
+
+class vec
+{
+    private:
+        int d; //the dimension of the vector
+        double* v; //to store the entries of the vector
+    public:
+        vec();
+        vec(int);
+        vec(int,const double[]);
+        vec(const vec&); //copy constructor (the default doesn't work anymore)
+        ~vec();
+
+        double get(int) const; //gets an entry of the vector
+        int dim() const; //dimension of the vector
+
+        void set(const double[]); //set the entries of the vector
+};
+
+vec::vec() //(0)
+{
+    d=1;
+    v=new double[1];
+    v[0]=0;
+}
+
+vec::vec(int n) //(0,0,...,0)
+{
+    if(n<=0) exit(1);
+    v=new double[n];
+    d=n;
+    for(int i=0; i<n; i++)
+        v[i]=0; //or *(v+i)=0
+}
+
+vec::vec(int n, const double x[]) //(v1, v2, v3, ... , vn)
+{
+    if(n<=0) exit(1);
+
+    v=new double[n];
+    d=n;
+
+    for(int i=0; i<n; i++)
+        v[i]=x[i];
+}
+
+vec::vec(const vec& w) //copy CONSTRUCTOR
+{
+    d=w.dim();
+    v=new double[d];
+    for(int i=0; i<d; i++)
+        v[i]=w.get(i);
+}
+
+vec::~vec() //delete memory associated to the vector
+{
+    delete[] v;
+    d=0;
+}
+
+double vec::get(int i) const
+{
+    if(i<0 || i>=d) exit(1);
+
+    return v[i];
+}
+
+int vec::dim() const
+{
+    return d;
+}
+
+void vec::set(const double x[])
+{
+    for(int i=0; i<d; i++)
+        v[i]=x[i];
+}
+
+//OVERLOADED OPERATORS
+vec operator+(const vec& v) //+v
+{
+    double a[v.dim()];
+
+    for(int i=0; i<v.dim(); i++)
+        a[i]=v.get(i);
+
+    vec w(v.dim(),a);
+    return w;
+}
+
+vec operator-(const vec& v)//-v
+{
+    double a[v.dim()];
+
+    for(int i=0; i<v.dim(); i++)
+        a[i]=-v.get(i);
+
+    vec w(v.dim(),a);
+    return w;
+}
+
+vec operator+(const vec& v, const vec& w)//v+w
+{
+    if(v.dim()!=w.dim())
+    {
+        cout << "VECTORS OF UNEQUAL DIMENSIONS!\n";
+        system("PAUSE");
+        exit(1);
+    }
+
+    double a[v.dim()];
+
+    for(int i=0; i<v.dim(); i++)
+        a[i]=v.get(i)+w.get(i);
+
+
+    vec t(v.dim(),a);
+    return t;
+}
+
+vec operator-(const vec& v, const vec& w)//v-w
+{
+    if(v.dim()!=w.dim())
+    {
+        cout << "VECTORS OF UNEQUAL DIMENSIONS!\n";
+        system("PAUSE");
+        exit(1);
+    }
+
+    double a[v.dim()];
+
+    for(int i=0; i<v.dim(); i++)
+        a[i]=v.get(i)-w.get(i);
+
+
+    vec t(v.dim(),a);
+    return t;
+}
+
+vec operator*(double c, const vec& v)//cv
+{
+    double a[v.dim()];
+
+    for(int i=0; i<v.dim(); i++)
+        a[i]=c*v.get(i);
+
+    vec t(v.dim(),a);
+    return t;
+}
+
+vec operator*(const vec& v, double c)//vc
+{
+    return c*v;
+}
+
+double operator*(const vec& v, const vec& w)//v.w
+{
+    if(v.dim()!=w.dim())
+    {
+        cout << "VECTORS OF UNEQUAL DIMENSIONS!\n";
+        system("PAUSE");
+        exit(1);
+    }
+
+    double a=0;
+
+    for(int i=0; i<v.dim(); i++)
+        a+=v.get(i)*w.get(i);
+
+    return a;
+}
+
+double operator!(const vec& v) //vector length
+{
+    return sqrt(v*v);
+}
+
+double operator<(const vec& v, const vec& w) //angle between vectors
+{
+    return acos(v*w/((!v)*(!w)));
+}
+
+bool operator==(const vec& v, const vec& w) //vector equals
+{
+    if(v.dim()!=w.dim()) return false;
+
+    for(int i=0; i<v.dim(); i++)
+        if(v.get(i)!=w.get(i)) return false;
+
+    return true;
+}
+
+bool operator!=(const vec& v, const vec& w) //vector not equals
+{
+    if(v==w) return false;
+    else return true;
+}
+
+ostream& operator<<(ostream& out, const vec& v) //display a vector
+{
+    out << "(";
+
+    for(int i=0; i<v.dim()-1; i++)
+        out << v.get(i) << ",";
+
+    out << v.get(v.dim()-1) << ")";
+
+    return out;
+}
+
+istream& operator>>(istream& in, vec& v) //input a vector
+{
+    char t;
+    t=in.get(); //gets the (
+
+    double a[v.dim()];
+
+    for(int i=0; i<v.dim(); i++)
+        in >> a[i] >> t; //number then comma or )
+
+    v.set(a);
+
+    return in;
+}
+
+int main()
+{
+    vec a;
+    cout << "a=" << a << endl;
+
+    vec b(5);
+    cout << "b=" << b << endl;
+
+    double x[]={1,2,3,4,5,6,7,8,9};
+
+    vec c(9,x);
+    cout << "c=" << c << endl;
+
+
+    cout << "Enter a 9-dimensional vector: ";
+    vec d(9);
+    cin >> d;
+
+    cout << "d=" << d << endl;
+
+    /* //These shouldn't work because the vectors don't have the same size
+    cout << "b+c=" << b+c << endl;
+    cout << "b-c=" << b-c << endl;
+    cout << "b*c=" << b*c << endl;
+    */
+
+    vec e=d;
+    cout << "e=" << e << endl;
+
+    cout << "+c=" << +c << endl;
+    cout << "-d=" << -d << endl;
+
+    cout << "c+d=" << c+d << endl;
+    cout << "c-d=" << c-d << endl;
+    cout << "5*c=" << 5*c << endl;
+    cout << "c*3=" << c*3 << endl;
+    cout << "c*d=" << c*d << endl;
+
+    cout << "|b|=" << !b << endl;
+    cout << "|c|=" << !c << endl;
+    cout << "|d|=" << !d << endl;
+    cout << "The angle between c and d is: " << (c<d)<< endl;
+
+
+    system("PAUSE");
+    return 1;
+}

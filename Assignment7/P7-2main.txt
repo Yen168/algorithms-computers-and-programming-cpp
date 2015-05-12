@@ -1,0 +1,16 @@
+int main()
+{
+    //declare your variables (1 line)
+
+    //get values a,b,c from user using prompt function (1 line)
+
+    //calculate the gcd of a,b,c using the gcd function and call it g (1 line)
+
+    //call findFactors function to find factors of the product of a/g and c/g which add to b/g (1 line)
+
+    //call display function to display the factored polynomial (1 line)
+
+
+    system("PAUSE"); //comment this out if you have a Mac
+    return 0;
+}

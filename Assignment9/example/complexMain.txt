@@ -1,0 +1,51 @@
+int main()
+{
+    complex z1; //z1=0+0i
+    cout << "z1=" << z1 << endl;;
+
+    cout << "Enter a complex number:";
+    cin >> z1;
+
+    cout << "z1=" << z1 << endl;
+
+    complex z2(3,4); //z=3+4i
+
+    cout << "z2=" << z2 << endl;
+    cout << "The real part of z2 is " << z2.real() << " and the imaginary part is " << z2.imag() << endl;
+
+    //Depending on how you defined conjugate(), either this:
+    z2.conjugate();
+    cout << "z2 conjugate is " << z2 << endl;
+    //or this:
+    cout << "z2 conjugate is " << z2.conjugate() << endl;
+    //or both.
+
+    cout << "The modulus of z2 is " << z2.modulus() << endl;
+
+    cout << "+z2=" << +z2 << " and -z2=" << -z2 << endl;
+
+    cout << "z1+z2=" << z1+z2 << endl;
+    cout << "z1-z2=" << z1-z2 << endl;
+    cout << "z1*z2=" << z1*z2 << endl;
+    cout << "z1/z2=" << z1/z2 << endl;
+
+    if(z1!=z2) cout << "z1==z2\n";
+
+    z1+=z2;
+    cout << "z1=" << z1 << endl;
+    z1-=z2;
+    cout << "z1=" << z1 << endl;
+    z1*=z2;
+    cout << "z1=" << z1 << endl;
+    z1/=z2;
+    cout << "z1=" << z1 << endl;
+
+    z1/=z1;
+
+    complex z3(1); //z3=1+0i
+
+    if(z1==z3) cout << "z1==z3" << endl;
+
+    system("PAUSE");
+    return 1;
+}

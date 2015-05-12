@@ -1,0 +1,11 @@
+               lbs      years
+Earth        3.000      3.000
+
+Mercury      1.140     12.465
+Venus        2.730      4.875
+Moon         0.498      3.000
+Mars         1.128      1.596
+Jupiter      7.584      0.252
+Saturn       3.195      0.102
+Uranus       2.658      0.036
+Neptune      3.420      0.018
